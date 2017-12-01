@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:form id="registroMensajes">
+            <h:outputText value="#{registroController.fechaBean}"></h:outputText>
+        </h:form>
+        <div id="listaMensajes">
+
+        </div>
+        <script type="text/javascript">
+            var host = "ws://localhost:8080/aplicacion-consumidora-1.0-SNAPSHOT/mensajes";
+            var websocket = new WebSocket(host);
+            websocket.onopen = function() {
+                console.log("conexion abierta");
+            }
+            websocket.onerror = function(evt) {
+                console.error("error en conexion");
+                console.error(evt);
+            }
+            
+            websocket.onclose = function() {
+                console.log("conexion cerrada");
+            }
+            
+            websocket.onmessage = function(evt) {
+                 console.log("message received: " + evt.data);
+                 document.getElementById("listaMensajes").innerHTML += "<p>"+evt.data+"</p>";
+            }
+
+        </script>
+
+
+    </h:body>
+</html>
+
